@@ -1,0 +1,26 @@
+
+<% if @patrons.any?() %>
+
+<h1>Here is a list of all the patrons:</h1>
+
+<ul>
+  <% @patrons.each() do |patron| %>
+    <li><a href="/patron/<%=patron.id()%>"><%=patron.patron_first()%> <%=patron.patron_last()%></a></li>
+  <% end %>
+</ul>
+
+<% else %>
+
+  <h1>This library has no patrons!</h1>
+
+<% end %>
+
+<form action="/patrons" method="post">
+<label for="patron_first">Patron First Name:</label>
+<input type="patron_first" name="patron_first">
+<label for="patron_last">Patron Last Name:</label>
+<input type="patron_last" name="patron_last">
+<label for="phone">Phone Number:</label>
+<input type="phone" name="phone">
+<button type="submit" name="button">Add Patron</button>
+</form>

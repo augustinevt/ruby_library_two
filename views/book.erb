@@ -10,5 +10,11 @@
 <input type="author_first" name="author_first">
 <label for="genre">Genre:</label>
 <input type="genre" name="genre">
-<button type="submit" name="button">Add Book</button>
+<button type="submit" name="button">Update Book</button>
+</form>
+
+
+<form class="" action="/book/<%=@book.id%>" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <button type="submit" name="button">Delete Book</button>
 </form>

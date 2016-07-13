@@ -1,0 +1,18 @@
+<h1><%=@patron.patron_first%> <%=@patron.patron_last%></h1>
+
+<form action="/patron/<%=@patron.id%>" method="post">
+<input type="hidden" name="_method" value="patch">
+<label for="patron_first">Patron First Name:</label>
+<input type="patron_first" name="patron_first">
+<label for="patron_last">Patron Last Name:</label>
+<input type="patron_last" name="patron_last">
+<label for="phone">Phone Number:</label>
+<input type="phone" name="phone">
+<button type="submit" name="button">Update Patron</button>
+</form>
+
+
+<form class="" action="/patron/<%=@patron.id%>" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <button type="submit" name="button">Delete Patron</button>
+</form>
