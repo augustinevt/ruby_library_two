@@ -1,0 +1,14 @@
+<h1><%=@book.title%></h1>
+
+<form action="/book/<%=@book.id%>" method="post">
+<input type="hidden" name="_method" value="patch">
+<label for="title">Enter Book Title</label>
+<input type="title" name="title">
+<label for="author_last">Author Last Name:</label>
+<input type="author_last" name="author_last">
+<label for="author_first">Author First Name:</label>
+<input type="author_first" name="author_first">
+<label for="genre">Genre:</label>
+<input type="genre" name="genre">
+<button type="submit" name="button">Add Book</button>
+</form>
