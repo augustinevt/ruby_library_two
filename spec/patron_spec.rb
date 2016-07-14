@@ -38,4 +38,13 @@ describe 'Patron' do
     end
   end
 
+  describe ('#patron_checkouts') do
+    it('should create a row in checkout tabel with book a patron from the library') do
+      new_patron = Patron.new({patron_last: 'Smith', patron_first: 'John', phone: '123-456-7890', id: nil})
+      new_patron.save()
+      new_patron.delete()
+      expect(Patron.all()).to(eq([]))
+    end
+  end
+
 end

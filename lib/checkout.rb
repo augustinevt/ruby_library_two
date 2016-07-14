@@ -1,16 +1,17 @@
 class Checkout
 
-  attr_accessor :patron_id, :book_id, :return_due, :id
+  attr_accessor :patron_id, :book_id, :return_due, :checkout_date, :id
 
   def initialize(attributes)
     @patron_id = attributes[:patron_id]
     @book_id = attributes[:book_id]
     @return_due = attributes[:return_due]
+    @checkout_date = attributes[:checkout_date]
     @id = attributes[:id]
   end
 
   def save()
-    result = DB.exec("INSERT INTO checkouts (patron_id, book_id, return_due) VALUES ('#{@patron_id}', '#{@book_id}', '#{@return_due}') RETURNING id;")
+    result = DB.exec("INSERT INTO checkouts (patron_id, book_id, return_due, checkout_date) VALUES ('#{@patron_id}', '#{@book_id}', '#{@return_due}', '#{@checkout_date}') RETURNING id;")
     @id = result.first['id'].to_i()
   end
 
@@ -21,8 +22,9 @@ class Checkout
       patron_id = result['patron_id'].to_i
       book_id = result['book_id'].to_i
       return_due = result['return_due']
+      checkout_date = result['checkout_date']
       id = result['id'].to_i
-      checkout = Checkout.new({patron_id: patron_id, book_id: book_id, return_due: return_due, id: id})
+      checkout = Checkout.new({patron_id: patron_id, book_id: book_id, return_due: return_due, id: id, checkout_date: checkout_date})
       checkouts.push(checkout)
     end
     checkouts
@@ -37,8 +39,9 @@ class Checkout
     patron_id = db_return['patron_id'].to_i
     book_id = db_return['book_id'].to_i
     return_due = db_return['return_due']
+    checkout_date = db_return['checkout_date']
     id = db_return['id'].to_i
-    patron = Checkout.new({patron_id: patron_id, book_id: book_id, return_due: return_due, id: id})
+    patron = Checkout.new({patron_id: patron_id, book_id: book_id, return_due: return_due, id: id, checkout_date: checkout_date})
   end
 
 
@@ -51,4 +54,23 @@ class Checkout
   define_method(:delete) do
     DB.exec("DELETE FROM checkouts WHERE id = #{@id}")
   end
+
+  def self.find_books_by_patron(patron_id)
+    checkouts = DB.exec("SELECT * FROM checkouts WHERE patron_id = #{patron_id};")
+    books = []
+    checkouts.each do |checkout|
+      id_of_book = checkout['book_id'].to_i
+      book = DB.exec("SELECT * FROM books WHERE id = #{id_of_book};").first
+      title = book['title']
+      author_last = book['author_last']
+      author_first = book['author_first']
+      genre = book['genre']
+      id = book['id'].to_i
+      book = Book.new({title: title, author_last: author_last, author_first: author_first, genre: genre, id: id})
+      books.push(book)
+    end
+    books
+  end
+
+
 end
