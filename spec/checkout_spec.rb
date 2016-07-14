@@ -60,4 +60,28 @@ describe 'Checkout' do
     end
   end
 
+  describe ('#overdue?') do
+    it('should returns true if book is overdue') do
+      new_patron = Patron.new({patron_last: 'Smith', patron_first: 'John', phone: '123-456-7890', id: nil})
+      new_book = Book.new({title: 'The Sun Also Rises', author_last: 'Hemingway', author_first: 'Ernest', genre: 'fiction', id: nil})
+      new_book2 = Book.new({title: 'The Moon Also Rises', author_last: 'Hemingway', author_first: 'Bernie', genre: 'non-fiction', id: nil})
+
+      new_patron.save()
+      new_book.save()
+      new_book2.save()
+
+      new_checkout = Checkout.new({patron_id: new_patron.id(), book_id: new_book.id(), return_due: '1992-02-15', checkout_date: '1992-02-14', id: nil})
+
+      new_checkout.save()
+
+
+      new_checkout.update({ return_due: Time.now() - 60 * 60 * 24 })
+
+      expect(Checkout.find(new_checkout.id()).overdue?()).to(eq(true))
+    end
+  end
+
+
+
+
 end

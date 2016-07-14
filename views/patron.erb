@@ -1,4 +1,22 @@
 <h1><%=@patron.patron_first%> <%=@patron.patron_last%></h1>
+<h3>Phone Number: <%=@patron.phone%></h3>
+<h3><a href="/patron/<%=@patron.id()%>/books">Browse Books</a></h3>
+
+<h2>Your Checkout History:</h2>
+<% if @books.any? %>
+<ul>
+  <% @books.each() do |book| %>
+    <li><a href="/patron/<%=@patron.id%>/book/<%=book.id()%>"><%=book.title()%></a></li>
+    <li>Checkout Date: <%=@checkout.checkout_date %></li>
+    <li>Due by: <%=@checkout.return_due %></li>
+    <% if @checkout.overdue?() %>
+      <h1>BOOK OVERDUE!!!!!!!!!</h1>
+    <% end %>
+  <% end %>
+</ul>
+
+<% end %>
+
 
 <form action="/patron/<%=@patron.id%>" method="post">
 <input type="hidden" name="_method" value="patch">

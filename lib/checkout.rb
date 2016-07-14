@@ -5,8 +5,8 @@ class Checkout
   def initialize(attributes)
     @patron_id = attributes[:patron_id]
     @book_id = attributes[:book_id]
-    @return_due = attributes[:return_due]
-    @checkout_date = attributes[:checkout_date]
+    @return_due = Time.now + 60 * 60 * 24
+    @checkout_date = Time.now()
     @id = attributes[:id]
   end
 
@@ -72,5 +72,7 @@ class Checkout
     books
   end
 
-
+  def overdue?()
+     self.return_due < Time.now
+  end
 end

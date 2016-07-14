@@ -38,4 +38,12 @@ describe 'Book' do
     end
   end
 
+  describe ('#find_by_title') do
+    it('should find a book from the library by its title') do
+      new_book = Book.new({title: 'The Sun Also Rises', author_last: 'Hemingway', author_first: 'Ernest', genre: 'fiction', id: nil})
+      new_book.save()
+      expect(Book.find_by_title('The Sun Also Rises')).to(eq(new_book))
+    end
+  end
+
 end

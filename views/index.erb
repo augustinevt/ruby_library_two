@@ -1,1 +1,9 @@
 <h1>Library</h1>
+<form class="patron" action="/patrons" method="get">
+  <input type="hidden" name="user_type" value="patron">
+  <button type="submit" name="button">Patron</button>
+</form>
+<form class="librarian" action="/patrons" method="post">
+    <input type="hidden" name="user_type" value="librarian">
+  <button type="submit" name="button">Librarian</button>
+</form>

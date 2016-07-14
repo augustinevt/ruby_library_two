@@ -54,4 +54,14 @@ class Book
   define_method(:delete) do
     DB.exec("DELETE FROM books WHERE id = #{@id}")
   end
+
+  def self.find_by_title(title)
+    db_return = DB.exec("SELECT * FROM books WHERE title = '#{title}';").first()
+    title = db_return['title']
+    author_last = db_return['author_last']
+    author_first = db_return['author_first']
+    genre = db_return['genre']
+    id = db_return['id'].to_i
+    book = Book.new({title: title, author_last: author_last, author_first: author_first, genre: genre, id: id})
+  end
 end
