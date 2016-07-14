@@ -3,7 +3,7 @@
   <input type="hidden" name="user_type" value="patron">
   <button type="submit" name="button">Patron</button>
 </form>
-<form class="librarian" action="/patrons" method="post">
+<form class="librarian" action="/patron/<%=@patron.id()%>/books" method="post">
     <input type="hidden" name="user_type" value="librarian">
-  <button type="submit" name="button">Librarian</button>
+  <button type="submit" name="button">Books</button>
 </form>

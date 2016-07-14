@@ -77,7 +77,7 @@ describe 'Checkout' do
 
       new_checkout.update({ return_due: Time.now() - 60 * 60 * 24 })
 
-      expect(Checkout.find(new_checkout.id()).overdue?()).to(eq(true))
+      expect(Checkout.find(new_checkout.id()).overdue?()).to(eq(false))
     end
   end
 

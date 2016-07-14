@@ -12,13 +12,18 @@ DB = PG.connect({:dbname => 'library_test'})
 enable :sessions
 
 get ('/') do
-  erb(:index)
+  redirect '/patrons'
 end
 
 get('/patron/:patron_id/books') do
   @patron = Patron.find(params['patron_id'].to_i)
   @patron_id = @patron.id()
-  @books = Book.all()
+  if params[:search]
+    @books = Book.find_by_title(params[:search])
+    redirect "/patron/#{@patron.id}/book/#{@books.id}"
+  else
+    @books = Book.all()
+  end
   erb(:books)
 end
 
